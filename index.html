@@ -281,7 +281,51 @@ footer {
 </footer>
 
 <script>
-const recipes = []; 
+```javascript
+const recipes = [
+  {
+    name: "Chocolate Chip Cookies",
+    category: "Baking",
+    description: "Chewy chocolate chip cookies with rich dark chocolate and flaky sea salt.",
+    image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=900",
+    time: "15 mins prep · 2–3 hours rest · 12 mins bake",
+    servings: "12 cookies",
+
+    ingredients: [
+      "145g unsalted butter, softened",
+      "65g light brown sugar",
+      "65g golden caster sugar",
+      "50g egg and extra yolk, combined",
+      "1 tsp vanilla extract",
+      "225g plain flour",
+      "1/2 tsp bicarbonate of soda",
+      "1/2 tsp fine salt",
+      "150g dark chocolate (60–70% cocoa), roughly chopped",
+      "Flaky sea salt, for finishing"
+    ],
+
+    instructions: [
+      "Prepare the butter: Allow it to soften to room temperature. It should be soft enough to press a finger into, but not melted or greasy.",
+
+      "Cream the butter and sugars: Beat the butter, light brown sugar and golden caster sugar together for approximately 2 minutes until creamy and combined. Avoid excessively whipping the mixture.",
+
+      "Add the eggs and vanilla: Add the combined egg and extra yolk, along with the vanilla extract. Beat until incorporated.",
+
+      "Combine the dry ingredients: In a separate bowl, whisk together the plain flour, bicarbonate of soda and fine salt. Gradually fold into the wet ingredients, stopping as soon as no obvious dry flour patches remain. Do not overmix.",
+
+      "Add the chocolate: Roughly chop the dark chocolate and fold it evenly through the dough.",
+
+      "Chill the dough: Cover the bowl and refrigerate for 2–3 hours.",
+
+      "Shape the cookies: Divide the chilled dough into 12 portions. Roll into balls, keeping them slightly taller than they are wide. Do not flatten them. Place on lined baking trays with approximately 6cm between each cookie.",
+
+      "Bake: Preheat the oven to 180°C. Bake for approximately 12 minutes, until the edges are lightly golden and the centres remain slightly soft.",
+
+      "Rest and finish: Leave the cookies on the baking tray for 10 minutes. Sprinkle with flaky sea salt while warm, then transfer to a wire rack."
+    ]
+  }
+];
+```
 let selectedCategory = "All";
 
 function renderRecipes() {
