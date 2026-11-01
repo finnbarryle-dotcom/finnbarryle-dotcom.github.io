@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finn's Kitchen | My Online Cookbook</title>
+
+<style>
+:root {
+  --green: #244b38;
+  --cream: #f8f6ef;
+  --white: #ffffff;
+  --text: #292d28;
+  --muted: #777b73;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+}
+
+header {
+  background: var(--green);
+  color: white;
+  padding: 22px 7%;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-weight: bold;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 18px;
+}
+
+.hero {
+  text-align: center;
+  padding: 75px 20px;
+  background: #e9ecdf;
+}
+
+.hero h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(36px, 6vw, 58px);
+  margin: 0 0 15px;
+}
+
+.hero p {
+  color: #596357;
+  font-size: 17px;
+}
+
+.search {
+  display: block;
+  width: min(100%, 500px);
+  padding: 15px;
+  margin: 28px auto 0;
+  border: 1px solid #d4d8ce;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 45px 20px;
+}
+
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 32px;
+  margin-bottom: 25px;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.category {
+  background: white;
+  border: 1px solid #d8ded3;
+  padding: 10px 17px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.category.active,
+.category:hover {
+  background: var(--green);
+  color: white;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.recipe-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px #0000000d;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.recipe-card:hover {
+  transform: translateY(-4px);
+}
+
+.recipe-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.recipe-info {
+  padding: 20px;
+}
+
+.recipe-info h3 {
+  font-family: Georgia, serif;
+  font-size: 23px;
+  margin: 0 0 10px;
+}
+
+.recipe-info p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.tag {
+  color: var(--green);
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.recipe-page {
+  display: none;
+  max-width: 850px;
+  margin: auto;
+  padding: 35px 20px;
+}
+
+.recipe-page img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.recipe-page h1 {
+  font-family: Georgia, serif;
+  font-size: 38px;
+}
+
+.recipe-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.recipe-content h2 {
+  color: var(--green);
+}
+
+.recipe-content li {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.back-button {
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.empty {
+  color: var(--muted);
+  padding: 25px 0;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  background: var(--green);
+  color: white;
+  margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+  nav {
+    justify-content: center;
+  }
+
+  nav a {
+    margin: 5px;
+  }
+
+  .recipe-content {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Finn's Kitchen</div>
+    <div>
+      <a href="#" onclick="showHome(); return false;">Home</a>
+      <a href="#recipes" onclick="showHome(); return true;">Recipes</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="hero">
+  <h1>A little taste of home.</h1>
+  <p>Recipes worth making, sharing and coming back to.</p>
+  <input
+    class="search"
+    id="search"
+    type="search"
+    placeholder="Search your recipes..."
+    oninput="renderRecipes()"
+  >
+</section>
+
+<main id="home">
+  <h2 class="section-title" id="recipes">Explore the cookbook</h2>
+
+  <div class="categories" id="categories">
+    <button class="category active" onclick="setCategory('All', this)">All recipes</button>
+    <button class="category" onclick="setCategory('Baking', this)">Baking</button>
+    <button class="category" onclick="setCategory('Desserts', this)">Desserts</button>
+    <button class="category" onclick="setCategory('Dinner', this)">Dinner</button>
+    <button class="category" onclick="setCategory('Snacks', this)">Snacks</button>
+  </div>
+
+  <div class="recipe-grid" id="recipeGrid"></div>
+  <p class="empty" id="empty" hidden>No recipes found. Try another search.</p>
+</main>
+
+<section class="recipe-page" id="recipePage">
+  <button class="back-button" onclick="showHome()">← Back to recipes</button>
+  <div id="recipeDetails"></div>
+</section>
+
+<footer>
+  <p>Finn's Kitchen</p>
+  <p>Made with care, served with love.</p>
+</footer>
+
+<script>
+const recipes = []; 
+let selectedCategory = "All";
+
+function renderRecipes() {
+  const query = document.getElementById("search").value.toLowerCase();
+
+  const filtered = recipes.filter(recipe => {
+    const matchesCategory =
+      selectedCategory === "All" ||
+      recipe.category === selectedCategory;
+
+    const matchesSearch =
+      recipe.name.toLowerCase().includes(query) ||
+      recipe.description.toLowerCase().includes(query) ||
+      recipe.category.toLowerCase().includes(query);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  const grid = document.getElementById("recipeGrid");
+  grid.innerHTML = "";
+
+  filtered.forEach(recipe => {
+    const card = document.createElement("article");
+    card.className = "recipe-card";
+
+    card.innerHTML = `
+      <img src="${recipe.image}" alt="${recipe.name}" loading="lazy">
+      <div class="recipe-info">
+        <span class="tag">${recipe.category}</span>
+        <h3>${recipe.name}</h3>
+        <p>${recipe.description}</p>
+        <p>${recipe.time} · ${recipe.servings}</p>
+      </div>
+    `;
+
+    card.addEventListener("click", () => showRecipe(recipe));
+    grid.appendChild(card);
+  });
+
+  document.getElementById("empty").hidden = filtered.length !== 0;
+}
+
+function setCategory(category, button) {
+  selectedCategory = category;
+
+  document.querySelectorAll(".category").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  button.classList.add("active");
+  renderRecipes();
+}
+
+function showRecipe(recipe) {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("hero").style.display = "none";
+  document.getElementById("recipePage").style.display = "block";
+
+  document.getElementById("recipeDetails").innerHTML = `
+    <img src="${recipe.image}" alt="${recipe.name}">
+    <h1>${recipe.name}</h1>
+    <p>${recipe.description}</p>
+    <p><strong>Time:</strong> ${recipe.time}</p>
+    <p><strong>Makes:</strong> ${recipe.servings}</p>
+
+    <div class="recipe-content">
+      <div>
+        <h2>Ingredients</h2>
+        <ul>
+          ${recipe.ingredients.map(item => `<li>${item}</li>`).join("")}
+        </ul>
+      </div>
+
+      <div>
+        <h2>Method</h2>
+        <ol>
+          ${recipe.instructions.map(step => `<li>${step}</li>`).join("")}
+        </ol>
+      </div>
+    </div>
+  `;
+
+  window.scrollTo(0, 0);
+}
+
+function showHome() {
+  document.getElementById("home").style.display = "block";
+  document.getElementById("hero").style.display = "block";
+  document.getElementById("recipePage").style.display = "none";
+  window.scrollTo(0, 0);
+}
+
+renderRecipes();
+</script>
+
+</body>
+</html>
